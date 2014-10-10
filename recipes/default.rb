@@ -4,6 +4,9 @@
 #
 # Copyright 2011-2014, Phil Cohen
 #
+# Modifications added by Thomas Berry at TouchBistro in Toronto, ON
+
+current_platform = node["platform"]
 
 if node["new_relic"]["license_key"].empty?
   warning = <<-EOM
@@ -45,14 +48,20 @@ template "/etc/newrelic/nrsysmond.cfg" do
   notifies :restart, "service[newrelic-sysmond]"
 end
 
-service "newrelic-sysmond" do
-  case node["platform"]
-  when "ubuntu"
-    action :stop
-  else
-    action [:enable, :start]
+if current_platform == "ubuntu"
+  file "/etc/init.d/newrelic-sysmond"
+    action :delete
+  end
+  # template # TODO: add your .conf file here to /etc/init
+  template "etc/init/newrelic-sysmond.conf" do
+    source "newrelic-sysmond.conf.erb"
+    owner "root"
+    group "newrelic"
+    action :create
   end
 end
 
-
-
+service "newrelic-sysmond" do
+  provider Chef::Provider::Service::Upstart if current_platform == "ubuntu"
+  action [:enable, :start]
+end
