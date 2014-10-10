@@ -59,12 +59,6 @@ if current_platform == "ubuntu"
   end
 end
 
-# We get this far...
-# problems
-# .conf file not working
-
-# Error executing action `start` on resource 'service[newrelic-sysmond]'
-
 service "newrelic-sysmond" do
   provider Chef::Provider::Service::Upstart if current_platform == "ubuntu"
   supports :status => true, :start => true, :stop => true, :restart => true
