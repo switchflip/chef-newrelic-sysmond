@@ -49,7 +49,7 @@ template "/etc/newrelic/nrsysmond.cfg" do
 end
 
 if current_platform == "ubuntu"  
-  file "/etc/init.d/newrelic-sysmond"
+  file "/etc/init.d/newrelic-sysmond" do
     action :delete
   end
   template "etc/init/newrelic-sysmond.conf" do
