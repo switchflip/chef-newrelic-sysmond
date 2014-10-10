@@ -48,11 +48,10 @@ template "/etc/newrelic/nrsysmond.cfg" do
   notifies :restart, "service[newrelic-sysmond]"
 end
 
-if current_platform == "ubuntu"
+if current_platform == "ubuntu"  
   file "/etc/init.d/newrelic-sysmond"
     action :delete
   end
-  # template # TODO: add your .conf file here to /etc/init
   template "etc/init/newrelic-sysmond.conf" do
     source "newrelic-sysmond.conf.erb"
     owner "root"
@@ -65,3 +64,15 @@ service "newrelic-sysmond" do
   provider Chef::Provider::Service::Upstart if current_platform == "ubuntu"
   action [:enable, :start]
 end
+
+
+
+
+
+
+
+
+
+
+
+
