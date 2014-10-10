@@ -45,7 +45,7 @@ template "/etc/newrelic/nrsysmond.cfg" do
   owner "root"
   group "newrelic"
   mode "0640"
-  notifies :restart, "service[newrelic-sysmond]"
+  # notifies :restart, "service[newrelic-sysmond]"
 end
 
 if current_platform == "ubuntu"  
@@ -62,6 +62,7 @@ end
 
 service "newrelic-sysmond" do
   provider Chef::Provider::Service::Upstart if current_platform == "ubuntu"
+  supports :status => true, :start => true, :stop => true, :restart => true
   action [:enable, :start]
 end
 
