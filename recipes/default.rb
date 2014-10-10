@@ -46,5 +46,13 @@ template "/etc/newrelic/nrsysmond.cfg" do
 end
 
 service "newrelic-sysmond" do
-  action [:enable, :start]
+  case node["platform"]
+  when "ubuntu"
+    action :stop
+  else
+    action [:enable, :start]
+  end
 end
+
+
+
