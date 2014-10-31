@@ -54,7 +54,7 @@ default["new_relic"]["hostname"]       = ""
 
 ## Basic Settings
 
-You must set the value for `node["new_relic"]["license_key"]`
+You must set the value for `node["new_relic"]["YOUR LICENSE KEY GOES HERE"]`
 
 
 ## Contributing
